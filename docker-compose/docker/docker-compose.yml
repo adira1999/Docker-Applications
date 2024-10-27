@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    image: spring-boot-app  # Assuming you have already built this image
+    ports:
+      - "8080:2121"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/dockerdemo  # Change as needed
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    networks:
+      - my-network
+
+  database:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dockerdemo
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - my-network
+
+volumes:
+  db-data:
+
+networks:
+  my-network:
